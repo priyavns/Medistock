@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>MediStock | Inventory</title>
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+            <a class="dashboard-brand" href="dashboard.html" aria-label="MediStock home">
+                <span class="brand-mark">M</span>
+                <span>MediStock<small>PHARMACY INVENTORY</small></span>
+            </a>
+            <p class="sidebar-label">WORKSPACE</p>
+            <nav class="dashboard-nav" aria-label="Main navigation">
+                <a class="nav-link active" href="#overview"><span class="nav-icon">▦</span>Overview</a>
+                <a class="nav-link" href="#inventory" onclick="viewMedicine()"><span class="nav-icon">▤</span>Medicine stock</a>
+                <button class="nav-link" type="button" onclick="addMedicine()"><span class="nav-icon">＋</span>Add medicine</button>
+            </nav>
+            <div class="sidebar-bottom">
+                <div class="sidebar-status"><span></span>Inventory system active</div>
+                <button class="nav-link logout-link" type="button" onclick="logout()"><span class="nav-icon">↪</span>Log out</button>
+            </div>
+        </aside>
+
+        <main class="dashboard-main" id="overview">
+            <header class="dashboard-topbar">
+                <div class="breadcrumb">Workspace <span>/</span> Overview</div>
+                <div class="topbar-user"><span class="user-avatar">P</span><span>Priya Patel<small>Administrator</small></span></div>
+            </header>
+
+            <div class="dashboard-content">
+                <section class="page-heading">
+                    <div>
+                        <p class="eyebrow">INVENTORY CONTROL</p>
+                        <h1>Good morning, Priya</h1>
+                        <p class="page-description">Here is your pharmacy stock at a glance.</p>
+                    </div>
+                    <button class="primary-button" type="button" onclick="addMedicine()"><span>＋</span> Add medicine</button>
+                </section>
+
+                <section class="metric-grid" aria-label="Inventory summary">
+                    <article class="metric-card">
+                        <div class="metric-label">Total products <span class="metric-icon teal">▤</span></div>
+                        <strong id="productCount">0</strong><small>Unique medicines in stock</small>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-label">Units on hand <span class="metric-icon blue">▦</span></div>
+                        <strong id="unitCount">0</strong><small>Across all products</small>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-label">Low stock <span class="metric-icon amber">!</span></div>
+                        <strong id="lowStockCount">0</strong><small>Products below 25 units</small>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-label">Stock value <span class="metric-icon coral">$</span></div>
+                        <strong id="stockValue">$0.00</strong><small>Estimated retail value</small>
+                    </article>
+                </section>
+
+                <section class="inventory-panel" id="inventory">
+                    <div class="panel-heading">
+                        <div><h2>Medicine inventory</h2><p>Review and manage current stock levels.</p></div>
+                        <div class="inventory-tools">
+                            <label class="search-box"><span aria-hidden="true">⌕</span><input type="search" id="searchInput" placeholder="Search medicines" oninput="searchMedicine()" aria-label="Search medicines"></label>
+                        </div>
+                    </div>
+                    <div class="table-scroll">
+                        <table id="medicineTable">
+                            <thead><tr><th>MEDICINE</th><th>MEDICINE ID</th><th>QUANTITY</th><th>UNIT PRICE</th><th>EXPIRY DATE</th><th>STATUS</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+                            <tbody>
+                                <tr><td class="medicine-name">Paracetamol 500mg</td><td>MED-1001</td><td class="quantity-cell">120</td><td>$4.50</td><td>2027-06-30</td><td><span class="stock-badge in-stock">In stock</span></td><td class="row-actions"><button type="button" onclick="updateMedicine(this)" aria-label="Update Paracetamol">Edit</button><button type="button" onclick="deleteMedicine(this)" aria-label="Delete Paracetamol">Delete</button></td></tr>
+                                <tr><td class="medicine-name">Amoxicillin 250mg</td><td>MED-1002</td><td class="quantity-cell">18</td><td>$8.25</td><td>2026-12-15</td><td><span class="stock-badge low-stock">Low stock</span></td><td class="row-actions"><button type="button" onclick="updateMedicine(this)" aria-label="Update Amoxicillin">Edit</button><button type="button" onclick="deleteMedicine(this)" aria-label="Delete Amoxicillin">Delete</button></td></tr>
+                                <tr><td class="medicine-name">Cetirizine 10mg</td><td>MED-1003</td><td class="quantity-cell">64</td><td>$6.00</td><td>2027-03-20</td><td><span class="stock-badge in-stock">In stock</span></td><td class="row-actions"><button type="button" onclick="updateMedicine(this)" aria-label="Update Cetirizine">Edit</button><button type="button" onclick="deleteMedicine(this)" aria-label="Delete Cetirizine">Delete</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer"><span id="inventoryCount">Showing 3 medicines</span><span>Stock levels update as you make changes</span></div>
+                </section>
+
+                <section id="addMedicineForm" class="add-medicine-panel" hidden>
+                    <div class="panel-heading"><div><h2>Add a medicine</h2><p>Enter product details to add it to your inventory.</p></div><button class="close-form" type="button" onclick="closeMedicineForm()" aria-label="Close form">×</button></div>
+                    <form class="medicine-form" onsubmit="event.preventDefault(); saveMedicine();">
+                        <label>Medicine name<input type="text" id="medicineName" placeholder="e.g. Ibuprofen 200mg" required></label>
+                        <label>Medicine ID<input type="text" id="medicineId" placeholder="e.g. MED-1004" required></label>
+                        <label>Quantity<input type="number" id="quantity" min="0" placeholder="0" required></label>
+                        <label>Unit price<input type="number" id="price" min="0" step="0.01" placeholder="0.00" required></label>
+                        <label>Expiry date<input type="date" id="expiryDate" required></label>
+                        <div class="form-actions"><button class="secondary-button" type="button" onclick="closeMedicineForm()">Cancel</button><button class="primary-button" type="submit">Save medicine</button></div>
+                    </form>
+                </section>
+                <footer class="dashboard-footer">MediStock <span>•</span> Inventory overview</footer>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
