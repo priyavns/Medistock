@@ -130,7 +130,7 @@ function saveMedicine(){
     statusCell.appendChild(badge);
     const actionsCell = row.insertCell();
     actionsCell.className = "row-actions";
-    actionsCell.innerHTML = '<button type="button" aria-label="Update medicine">Edit</button><button type="button" aria-label="Delete medicine">Delete</button>';
+    actionsCell.innerHTML = '<button type="button" aria-label="Update medicine">Update Medicine</button><button type="button" aria-label="Delete medicine">Delete</button>';
     actionsCell.children[0].addEventListener("click", () => updateMedicine(actionsCell.children[0]));
     actionsCell.children[1].addEventListener("click", () => deleteMedicine(actionsCell.children[1]));
     document.querySelector(".medicine-form").reset();
