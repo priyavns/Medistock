@@ -112,7 +112,7 @@ function renderMedicineRow(medicine) {
     medicine.name,
     medicine.medicineCode,
     medicine.quantity,
-    `$${Number(medicine.unitPrice).toFixed(2)}`,
+    `₹${Number(medicine.unitPrice).toFixed(2)}`,
     medicine.expiryDate,
   ];
   values.forEach((value, index) => {
@@ -238,7 +238,7 @@ function refreshInventorySummary() {
   document.getElementById("unitCount").textContent = units.toLocaleString();
   document.getElementById("lowStockCount").textContent = lowStock;
   document.getElementById("stockValue").textContent =
-    `$${stockValue.toFixed(2)}`;
+    `₹${stockValue.toFixed(2)}`;
   document.getElementById("inventoryCount").textContent =
     `Showing ${rows.length} ${rows.length === 1 ? "medicine" : "medicines"}`;
 }
