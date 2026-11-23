@@ -1,0 +1,6 @@
+backend/out/
+backend/target/
+backend/lib/*.jar
+dist/
+.env
+*.class

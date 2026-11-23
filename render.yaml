@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: medistock-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+    envVars:
+      - key: TIDB_HOST
+        sync: false
+      - key: TIDB_PORT
+        value: "4000"
+      - key: TIDB_DATABASE
+        value: medistock
+      - key: TIDB_USER
+        sync: false
+      - key: TIDB_PASSWORD
+        sync: false
+      - key: FRONTEND_ORIGINS
+        sync: false
