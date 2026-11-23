@@ -230,8 +230,8 @@ function refreshInventorySummary() {
     if (quantity <= 25) lowStock++;
     const badge = row.cells[5]?.querySelector(".stock-badge");
     if (badge) {
-      badge.className = `stock-badge ${quantity <= 25 ? "low-stock" : "in-stock"}`;
-      badge.textContent = quantity <= 25 ? "Low stock" : "In stock";
+      badge.className = `stock-badge ${quantity <= 10 ? "low-stock" : "in-stock"}`;
+      badge.textContent = quantity <= 10 ? "Low stock" : "In stock";
     }
   });
   document.getElementById("productCount").textContent = rows.length;
