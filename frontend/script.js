@@ -260,6 +260,15 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "index.html";
       return;
     }
+    const hour = new Date().getHours();
+    const greeting =
+      hour < 12
+        ? "Good morning"
+        : hour < 18
+          ? "Good afternoon"
+          : "Good evening";
+    document.getElementById("welcomeHeading").textContent =
+      `${greeting}, ${user.username}`;
     document.getElementById("loggedInUser").innerHTML =
       `${escapeHtml(user.username)}<small>Administrator</small>`;
     loadMedicines();
