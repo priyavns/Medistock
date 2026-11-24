@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hour = new Date().getHours();
     const greeting =
       hour < 12
-        ? "Good morning"
+        ? "Good Morning"
         : hour < 18
           ? "Good afternoon"
           : "Good evening";
